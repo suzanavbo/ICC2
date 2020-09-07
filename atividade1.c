@@ -1,5 +1,6 @@
 /* Implementação de algoritmos de ordenação
- *    Executa a ordenação de um vetor (fornecido pelo usuário) de tamanho N             *    (especificado pelo usuáio) fazendo uso do algoritmos de ordenação 
+ *    Executa a ordenação de um vetor (fornecido pelo usuário) de tamanho N             
+ *    (especificado pelo usuáio) fazendo uso do algoritmos de ordenação 
  *    SELECTION ou BUBBLE COM SENTINELA (escolha do usuário).
  *
  *    Caso queira que o processo de ordenação seja feito por meio do SELECTION, digite
