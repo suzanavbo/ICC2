@@ -8,9 +8,12 @@
  *    Posteriormente entra-se com o valor N de elementos do vetor, seguido pelo valor de
  *    cada elemento.
  *
- *    Autora: Suzana Vilas Boas de Oliveira
+ *    Autora 1: Suzana Vilas Boas de Oliveira
  *    Nº USP: 10262777
  *    Disciplina: ICC2 - 2020
+ *    Autor 2:Matheus Ronconi Figueredo
+ *    Nº USP : 980741
+ *  
  *    
  */
 
