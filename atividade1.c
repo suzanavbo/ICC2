@@ -8,12 +8,11 @@
  *    Posteriormente entra-se com o valor N de elementos do vetor, seguido pelo valor de
  *    cada elemento.
  *
- *    Autora 1: Suzana Vilas Boas de Oliveira
- *    Nº USP: 10262777
+ *    Autores: Matheus Ronconi Figueredo (980741)
+ *             Suzana Vilas Boas de Oliveira (10262777)
+ *             William Silva Cavalcanti (9378940)
+ * 
  *    Disciplina: ICC2 - 2020
- *    Autor 2:Matheus Ronconi Figueredo
- *    Nº USP : 980741
- *  
  *    
  */
 
