@@ -1,6 +1,6 @@
 /* Implementação de algoritmos de ordenação
  *    Executa a ordenação de Q vetores (fornecido pelo usuário) de tamanho N             
- *    (especificado pelo usuáio) de cada vetor fazendo uso do algoritmos de ordenação 
+ *    (especificado pelo usuário) de cada vetor fazendo uso do algoritmos de ordenação 
  *    INSERTION e MERGE.
  *
  *    Digite o número Q de vetores que dejasa ordenar. Posteriormente digite o tamanho N
@@ -47,7 +47,7 @@ int* lengh_vectors(int numb_vector){
  *                                Obs.: vector[][] é uma matriz onde cada linha representa um vetor passados 
  *                                pelo usuário
  */
-int** leitura_vetor(int* lengh, int numb_vector){ 
+int** leitura_vetor(int lengh[], int numb_vector){ 
   int i;
   int j;
   int** vector = malloc(numb_vector*sizeof(int*));  //Alocação dinâmica na memória RAM referente 
@@ -76,7 +76,27 @@ int** leitura_vetor(int* lengh, int numb_vector){
 }
 
 
+/*  Função responsável por alocar em um vetor temporário, o vetor a ser ordenado 
+ *    nesse caso especificamente pela função INSERTION, já que esta ordenação é realizada
+ *    antes de se realiar a ordenação com o algorítmo MERGE, e não queremos que o MERGE tenha
+ *    ordenar um vetor já ordenado pelo INSERTION.
+ *    
+ *    Entradas: - vector[]    ==> endereço da primeira posição do vetor a ser ordenado pelo insertion
+ *                                e por isso a ser armazenado em um vetor temporário
+ *              - lengh       ==> tamanho do vetor a ser ordenado/armazenado
+ *    Saída:    - temp        ==> endereço do primeiro byte do primeiro elemento do vetor a ser ordenado
+ *                                agora armazenado em um vetor temporário
+ */
+int* temporary(int vector[], int lengh){
+  int* temp = malloc(lengh*sizeof(int));
+  int i;
 
+  for (i = 0; i < lengh; i++){
+    temp[i] = vector[i];
+  }
+ 
+  return temp;
+}
 /*  Função que faz a ordenacao de um vetor, por meio do algoritmo INSERTION
  *    
  *    Entradas: - lengh     ==> indica o tamanho do vetor a ser ordenado
@@ -201,10 +221,11 @@ int main (int argc, char* argv[]){
   int numb_vector;
   int* lengh;
   int** vector;
+  int* temp;
   int* data_m = malloc(2*sizeof(int));  //data_m aponta para o primeiro endereço
                                         //de memória de um bloco de 2 inteiros. No primeiro
-                                        //(*data_m) armazenaremos o número de trocas feitas pelo merge. 
-                                        //No segundo *(data_m+1) armazenaremos as comparações
+                                        //(*data_m) armazenaremos o número de trocas feitas pelo 
+                                        //merge. No segundo *(data_m+1) armazenaremos as comparações
                             
   
   scanf("%d", &numb_vector);
@@ -214,17 +235,19 @@ int main (int argc, char* argv[]){
   vector = leitura_vetor(lengh, numb_vector);  //Leitura e armazenamento do vetor
 
   for(i = 0; i < numb_vector; i++){
-    insertion(vector[i], lengh[i]);
+    temp = temporary(vector[i], lengh[i]);
+    insertion(temp, lengh[i]);
+    free(temp);
     data_m[0] = 0;
     data_m[1] = 0;
     merge_r(vector[i], 0, lengh[i]-1, data_m);
     printf("M %d %d %d\n", lengh[i], data_m[0], data_m[1]);
   }
-
+   
 
   //Liberando memória
-  for (i = 0; i < numb_vector; i++){
-       free(vector[i]); 
+  for (j = 0; j < numb_vector; j++){
+       free(vector[j]); 
   } 
   
   free(vector);
