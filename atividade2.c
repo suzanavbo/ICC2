@@ -6,8 +6,10 @@
  *    Digite o número Q de vetores que dejasa ordenar. Posteriormente digite o tamanho N
  *    de cada um dos vetores. Em seguida, digite os elementos de cada vetor.
  *
- *    Autora: Suzana Vilas Boas de Oliveira
- *    Nº USP: 10262777
+ *    Autores: Daniel Torreao Correa Thiemann (4770077)
+ *             Luiz Paulo Souto Monteiro (10684889)
+ *             Suzana Vilas Boas de Oliveira (10262777)
+ *    Grupo: 10
  *    Disciplina: ICC2 - 2020
  *    
  */
