@@ -178,9 +178,9 @@ void shell (int vector[], int lengh, int* data){
       gap /= 2;
     }
    data[0] = compare + copy; 
-   printf("Subvetor ordenado pelo SHELL: ");
+   // printf("Subvetor ordenado pelo SHELL: ");
    for(int i = 0; i < lengh; i++){
-   printf("%d ", vector[i]);
+   //printf("%d ", vector[i]);
    //printf("\n compare = %d, copy = %d\n", compare, copy);
    }
 }
@@ -266,14 +266,28 @@ int main (int argc, char* argv[]){
   for(i = 0; i < lengh; i++){
     temp = temporary(sub_vector[i], sub_lengh[i]);
     shell(temp, sub_lengh[i], data);
-    printf("\nOperações = %d \n", data[0]);
+    //printf("\nOperações = %d \n", data[0]);
     free(temp);
     quick(sub_vector[i], 0, sub_lengh[i]-1, data);
-    printf("Subvetor ordenado pelo QUICK: ");
+    /*printf("Subvetor ordenado pelo QUICK: ");
     for(int k = 0; k < sub_lengh[i]; k++){
       printf("%d ", sub_vector[i][k]);
     }
     printf("\nOperações = %d\n\n\n", data[1]);
+    */
+
+    //printf("\nS=%d\nQ=%d\n", data[0], data[1]);
+
+    if(data[0] > data[1]){
+      printf("Q ");
+    }
+    else if(data[0] < data[1]){
+      printf("S ");
+    }
+    else{
+      printf("- ");
+    }
+
     data[1] = 0;
   }
    
