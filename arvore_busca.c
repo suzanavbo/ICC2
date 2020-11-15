@@ -1,11 +1,11 @@
 /* Implementação de algoritmos de busca
- *    Realiza a busca, por meio do conceito de ÁRVORE BINÁRIA DE BUSCA 
+ *    Realiza a busca, por meio do conceito de ÁRVORE AVL DE BUSCA 
  *    de de K elementos (fornecidos pelo usuário) em um conjunto de N
  *    elementos, também fornecidos pelo usuário. 
  *     
  *    Digite o número N de elementos a serem organizados em árvore para 
  *    a realização de busca. Em seguida, digite cada um dos elementos a
- *    serem organizados em ÁRVORE BINÁRIA para a realização da busca. A
+ *    serem organizados em ÁRVORE AVL para a realização da busca. A
  *    posteriori especifique a quantidade K de elementos a serem buscados.
  *    Por fim, especifique os elementos a serem buscados.
  *
@@ -28,10 +28,130 @@
  */
 typedef struct node{
   int value;
+  int height;
   struct node* left;
   struct node* right;
 } NODE;
 
+/*  Função responsável por determinar a altura à esquerda de determinado nó da árvore AVL.
+ *    
+ *    Entrada:  - node   ==> endereço do primeiro byte do pirmeiro parâmetro de uma
+ *                          struct (tipo) node sobre a qual pretende-se obter informação
+ *                          de altura à esquerda
+ *     
+ *    Saída:    - height ==> altura à esquerda do nó em análise                                
+ */
+
+int left_height_f(NODE* node){
+	int left_height;
+	
+  if(node == NULL){
+    return 0;
+  }
+	
+  //Nó sem filhos à esquerda
+	if(node->left == NULL){
+    left_height = 0;
+  }
+	else{
+    left_height = 1 + node->left->height;
+  }
+	return left_height;
+}
+
+
+/*  Função responsável por determinar a altura à direita de determinado nó da árvore AVL.
+ *    
+ *    Entrada:  - node         ==> endereço do primeiro byte do pirmeiro parâmetro de uma
+ *                                 struct (tipo) node sobre a qual pretende-se obter informação
+ *                                 de altura à direita
+ *     
+ *    Saída:    - right_height ==> altura à direita do nó em análise                                
+ */
+
+int right_height_f(NODE* node){
+	int right_height;
+	
+  if(node == NULL){
+    return 0;
+  }
+	
+  //Nó sem filhos à esquerda
+	if(node->right == NULL){
+    right_height = 0;
+  }
+	else{
+    right_height = 1 + node->right->height;
+  }
+	return right_height;
+}
+		
+/*  Função responsável por determinar a altura de determinado nó da árvore AVL.
+ *    
+ *    Entrada:  - node         ==> endereço do primeiro byte do pirmeiro parâmetro de uma
+ *                                 struct (tipo) node sobre a qual pretende-se obter informação
+ *                                 de altura
+ *     
+ *    Saída:    - height       ==> altura à direita do nó em análise                                
+ */
+
+int height_f(NODE* node){
+	int height;
+  int left_height;
+  int right_height;
+	
+  if(node == NULL){
+    return 0;
+  }
+	
+  left_height = left_height_f(node);
+  right_height = right_height_f(node);
+  
+  if(left_height > right_height){
+    height = left_height;
+  }
+  else{
+    height = right_height;
+  }
+
+	return height;
+}
+
+
+int balance(NODE* node){
+  int balance;
+
+  if(node == NULL){
+    return 0;
+  }
+	
+  balance = left_height_f(node) - right_height_f(node);
+ 
+	return balance;
+}
+
+NODE* rotate_right(NODE *node){
+	NODE* aux;
+	
+  aux = node->left;
+	node->left = aux->right;
+	aux->right= node;
+	node->height= height_f(node);
+	aux->height = height_f(aux);
+	return aux;
+}
+
+NODE* rotate_left(NODE* node){
+	NODE* aux;
+
+	aux = node->right;
+	node->right = aux->left;
+	aux->left = node;
+	node->height = height_f(node);
+	aux->height = height_f(aux);
+	
+	return aux;
+}
 
 /*  Função que faz a contrução dos nós de uma árvore binária.
  *    
@@ -48,6 +168,7 @@ NODE* newNode(int newValue){
   aux->value = newValue;
   aux->left = NULL;
   aux->right = NULL;
+  aux->height = 0;
   return aux;
 }
 
@@ -68,11 +189,31 @@ NODE* insertNode(NODE* node, int newValue){
   else{
     if (newValue < node->value){
       node->left = insertNode(node->left, newValue);
+      if (balance(node) == 2){
+        if (newValue < node->left->value){
+          node = rotate_right(node);
+        }
+        else{
+          node->left = rotate_left(node->left);
+          node = rotate_right(node);
+        }
+      }
     }
     else{
       node->right = insertNode(node->right, newValue);
+      if (balance(node) == -2){
+        if (newValue < node->right->value){
+          node->right = rotate_right(node->right);
+          node = rotate_left(node);
+        }
+        else{
+          node = rotate_left(node);
+        }
+      }
     }
   }
+
+  node->height = height_f(node);
 
   return node;
 }
