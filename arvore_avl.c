@@ -148,14 +148,14 @@ int balance(NODE* node){
  *                                 struct após a realização da rotação                                
  */
 NODE* rotate_right(NODE *node){
-	NODE* aux;
+  NODE* aux;
 	
   aux = node->left;
-	node->left = aux->right;
-	aux->right= node;
-	node->height= height_f(node);
-	aux->height = height_f(aux);
-	return aux;
+  node->left = aux->right;
+  aux->right= node;
+  node->height= height_f(node);
+  aux->height = height_f(aux);
+  return aux;
 }
 
 
@@ -168,15 +168,15 @@ NODE* rotate_right(NODE *node){
  *                                 struct após a realização da rotação                                
  */
 NODE* rotate_left(NODE* node){
-	NODE* aux;
+  NODE* aux;
 
-	aux = node->right;
-	node->right = aux->left;
-	aux->left = node;
-	node->height = height_f(node);
-	aux->height = height_f(aux);
+  aux = node->right;
+  node->right = aux->left;
+  aux->left = node;
+  node->height = height_f(node);
+  aux->height = height_f(aux);
 	
-	return aux;
+  return aux;
 }
 
 
@@ -216,8 +216,8 @@ NODE* insertNode(NODE* node, int newValue){
   else{
     if (newValue < node->value){
       node->left = insertNode(node->left, newValue);
-      if (balance(node) == 2){
-        if (newValue < node->left->value){
+      if (balance(node) >= 2){
+        if (balance(node->left) > 0){
           node = rotate_right(node);
         }
         else{
@@ -228,8 +228,8 @@ NODE* insertNode(NODE* node, int newValue){
     }
     else{
       node->right = insertNode(node->right, newValue);
-      if (balance(node) == -2){
-        if (newValue < node->right->value){
+      if (balance(node) <= -2){
+        if (balance(node->right) > 0){
           node->right = rotate_right(node->right);
           node = rotate_left(node);
         }
@@ -318,24 +318,31 @@ void free_tree(NODE* node){
 
 }
 
-
+//Visitação da Árvore
+/*void inordem(NODE* node){
+  if (node != NULL){
+    inordem(node->left);
+    printf("%d", node->value);
+    inordem(node->right);
+  }
+}*/
 
 int main (int argc, char* argv[]){
   
   //Alocar espaco na memoria stack
   int lengh;          //Variável responsável por armazenar a quantidade de elementos
-         		      //a serem organizados em uma árbove binária de busca
+                      //a serem organizados em uma árbove binária de busca
   int lengh_search;   //Variável resposnável por armzenar a quantidade de elementos
-		              //a serem buscados na árvore
+		      //a serem buscados na árvore
   int aux;            //Variável que armazenará em si os elementos a serem organizados
-		              // em árvore
+		      // em árvore
   int* search_vector; //Vetor que armazenará em si os elementos a serem buscados
   
   NODE* root;         //Ponteiro (struct node) responsável pela contrução da árvore. 
-		              //root aponta para o endereço de uma struct node (raiz da árvore). 
+		      //root aponta para o endereço de uma struct node (raiz da árvore). 
   
   NODE* search;	      //Ponteiro (struct node) responsável pela busca em árvore. 
-		              //search aponta para o endereço de uma struct node.	
+		      //search aponta para o endereço de uma struct node.	
 
   
   scanf("%d", &lengh);                //Leitura da quantidade de elementos da árvore
@@ -349,7 +356,10 @@ int main (int argc, char* argv[]){
   
   scanf("%d", &lengh_search);                  //Leitura da quantidade de elementos a serem buscados  
   search_vector = leitura_vetor(lengh_search); //Leitura e armazenamento dos elementos em um vetor
-
+ 
+  //Visitando a ÁRVORE   
+  //inordem(root);
+  //printf("\n");
     
   //Processo de busca em árvore
   for(int j = 0; j<lengh_search; j++){
