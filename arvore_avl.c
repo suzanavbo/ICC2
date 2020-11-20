@@ -52,7 +52,7 @@ int left_height_f(NODE* node){
 	
   //Nó sem filhos à esquerda
   if(node->left == NULL){
-    left_height = 0;
+    left_height = 1;
   }
   else{
     left_height = 1 + node->left->height;
@@ -78,7 +78,7 @@ int right_height_f(NODE* node){
 	
   //Nó sem filhos à esquerda
   if(node->right == NULL){
-    right_height = 0;
+    right_height = 1;
   }
   else{
     right_height = 1 + node->right->height;
@@ -148,14 +148,14 @@ int balance(NODE* node){
  *                                 struct após a realização da rotação                                
  */
 NODE* rotate_right(NODE *node){
-  NODE* aux;
+	NODE* aux;
 	
   aux = node->left;
-  node->left = aux->right;
-  aux->right= node;
-  node->height= height_f(node);
-  aux->height = height_f(aux);
-  return aux;
+	node->left = aux->right;
+	aux->right= node;
+	node->height= height_f(node);
+	aux->height = height_f(aux);
+	return aux;
 }
 
 
@@ -168,15 +168,15 @@ NODE* rotate_right(NODE *node){
  *                                 struct após a realização da rotação                                
  */
 NODE* rotate_left(NODE* node){
-  NODE* aux;
+	NODE* aux;
 
-  aux = node->right;
-  node->right = aux->left;
-  aux->left = node;
-  node->height = height_f(node);
-  aux->height = height_f(aux);
+	aux = node->right;
+	node->right = aux->left;
+	aux->left = node;
+	node->height = height_f(node);
+	aux->height = height_f(aux);
 	
-  return aux;
+	return aux;
 }
 
 
@@ -189,13 +189,13 @@ NODE* rotate_left(NODE* node){
  */
 NODE* newNode(int newValue){
   NODE* aux = (NODE*) malloc(sizeof(NODE)); //Alocação dinâmica de memória. Aloca na
-					    //heap o espaço esritamente necessário para a
+					                                  //heap o espaço esritamente necessário para a
                                             //utilização de um tipo NODE
   //Criação de um nó da árvore binária
   aux->value = newValue;
   aux->left = NULL;
   aux->right = NULL;
-  aux->height = 0;
+  aux->height = 1;
   return aux;
 }
 
@@ -204,7 +204,7 @@ NODE* newNode(int newValue){
  *    
  *    Entradas: - node     ==> endereço do primeiro byte do pirmeiro parâmetro de uma
  *                             struct (tipo) node na qual se pretende fazer a inserção
- *		        - newValue ==> valor a ser incluído na árvore
+ *		          - newValue ==> valor a ser incluído na árvore
  *     
  *    Saída:    - node     ==> endereço do primeiro byte do primeiro parâmetro da 
  *                             struct (tipo) node na qual se fez a inserção                              
@@ -250,7 +250,7 @@ NODE* insertNode(NODE* node, int newValue){
  *    
  *    Entradas: - node        ==> endereço do primeiro byte do pirmeiro parâmetro de uma
  *                             struct (tipo) node na qual se pretende fazer a busca
- *		- valueSearch ==> valor a ser buscado na árvore
+ *	          	- valueSearch ==> valor a ser buscado na árvore
  *     
  *    Saída:    - node     ==> endereço do primeiro byte do primeiro parâmetro da 
  *                             struct (tipo) node na qual fora encontrado o elemento
@@ -283,8 +283,8 @@ NODE* searchNode(NODE* node, int valueSearch){
 int* leitura_vetor(int lengh){ 
   int i;
   int* vector = malloc(lengh*sizeof(int));         //Alocação dinâmica na memória RAM. 
-                                                    //Aloca apenas o espaço estritamente
-                                                    //necessário. 
+                                                   //Aloca apenas o espaço estritamente
+                                                   //necessário. 
     
   //Fazendo a leitura do vetor
   for (i = 0; i < lengh; i++){
@@ -305,7 +305,7 @@ int* leitura_vetor(int lengh){
  *  desalocando a memória ocupada por cada tipo NODE.
  *    
  *    Entradas: - node  ==> endereço do primeiro byte do pirmeiro parâmetro de uma
- *                                struct (tipo) node cujo espaço pretende ser desalocado
+ *                          struct (tipo) node cujo espaço pretende ser desalocado
  *		
  *    Saída:    - void                               
  */
@@ -331,18 +331,18 @@ int main (int argc, char* argv[]){
   
   //Alocar espaco na memoria stack
   int lengh;          //Variável responsável por armazenar a quantidade de elementos
-                      //a serem organizados em uma árbove binária de busca
+         		          //a serem organizados em uma árbove binária de busca
   int lengh_search;   //Variável resposnável por armzenar a quantidade de elementos
-		      //a serem buscados na árvore
+		                  //a serem buscados na árvore
   int aux;            //Variável que armazenará em si os elementos a serem organizados
-		      // em árvore
+		                  // em árvore
   int* search_vector; //Vetor que armazenará em si os elementos a serem buscados
   
   NODE* root;         //Ponteiro (struct node) responsável pela contrução da árvore. 
-		      //root aponta para o endereço de uma struct node (raiz da árvore). 
+		                  //root aponta para o endereço de uma struct node (raiz da árvore). 
   
   NODE* search;	      //Ponteiro (struct node) responsável pela busca em árvore. 
-		      //search aponta para o endereço de uma struct node.	
+		                  //search aponta para o endereço de uma struct node.	
 
   
   scanf("%d", &lengh);                //Leitura da quantidade de elementos da árvore
